@@ -5,16 +5,19 @@ using UnityEngine.UI;
 
 public class Building : MonoBehaviour
 {
-	GameController gameController;
+	BuildingController buildingController;
 	public GameObject canvas;
+	public GameObject buyUI;
+	public GameObject ownedUI;
 	public Text priceLabel;
 	public bool isSelected;
+	public bool isOwned;
 	public int price;
 
 	void Start ()
 	{
-		gameController = GameObject.FindWithTag("GameController").GetComponent<GameController>();
 		SetPriceLabel();
+		buildingController = GameObject.FindWithTag("GameController").GetComponent<BuildingController>();
 	}
 
 	void OnMouseOver ()
@@ -23,20 +26,41 @@ public class Building : MonoBehaviour
 		{
 			if (Input.GetMouseButtonDown(0))
 			{
-				gameController.SetSelectedBuilding(this);
+				buildingController.SetSelectedBuilding(this);
 			}
 		}
 	}
 
-	public void SetSelected (bool state)
-	{
-		canvas.SetActive(state);
-		isSelected = state;
-	}
-
 	public void AttemptBuy ()
 	{
-		gameController.AttemptBuyBuilding(this);
+		buildingController.AttemptBuyBuilding(this);
+	}
+
+	public void SetSelected (bool state)
+	{
+		isSelected = state;
+		canvas.SetActive(state);
+	}
+
+	void SetOwnedUI (bool state)
+	{
+		buyUI.SetActive(!state);
+		ownedUI.SetActive(state);
+	}
+
+	public void SetOwned (bool state, string owner)
+	{
+		isOwned = state;
+		UpdateColor(owner);
+		SetOwnedUI(state);
+	}
+
+	void UpdateColor (string owner)
+	{
+		if (owner == "player")
+		{
+			GetComponent<Renderer>().material.color = Color.blue;
+		}
 	}
 
 	void SetPriceLabel ()
