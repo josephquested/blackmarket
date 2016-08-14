@@ -3,17 +3,26 @@ using System.Collections;
 
 public class GameController : MonoBehaviour {
 
+	ResourceController resources;
 	Building selectedBuilding;
+
+	void Start ()
+	{
+		resources = GetComponent<ResourceController>();
+	}
 
 	public void SetSelectedBuilding (Building building)
 	{
-		if (selectedBuilding != null) selectedBuilding.SetCanvasActive(false);
+		if (selectedBuilding != null) selectedBuilding.SetSelected(false);
 		selectedBuilding = building;
-		selectedBuilding.SetCanvasActive(true);
+		selectedBuilding.SetSelected(true);
 	}
 
 	public void AttemptBuyBuilding (Building building)
 	{
-		print("buy!");
+		if (resources.cash >= building.price)
+		{
+			print("can buy!");
+		}
 	}
 }
