@@ -8,7 +8,6 @@ public class Building : MonoBehaviour
 	BuildingController buildingController;
 	public GameObject canvas;
 	public GameObject buyUI;
-	public GameObject ownedUI;
 	public Text priceLabel;
 	public bool isSelected;
 	public bool isOwned;
@@ -40,19 +39,20 @@ public class Building : MonoBehaviour
 	{
 		isSelected = state;
 		canvas.SetActive(state);
+		UpdateUI();
 	}
 
-	void SetOwnedUI (bool state)
+	void UpdateUI ()
 	{
-		buyUI.SetActive(!state);
-		ownedUI.SetActive(state);
+		if (isOwned) buyUI.SetActive(false);
+		else buyUI.SetActive(true);
 	}
 
 	public void SetOwned (bool state, string owner)
 	{
 		isOwned = state;
 		UpdateColor(owner);
-		SetOwnedUI(state);
+		UpdateUI();
 	}
 
 	void UpdateColor (string owner)

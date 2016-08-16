@@ -4,6 +4,7 @@ using System.Collections;
 public class BuildingController : MonoBehaviour {
 	ResourceController resources;
 	Building selectedBuilding;
+	public GameObject buildingUI;
 
 	void Start ()
 	{
@@ -15,6 +16,7 @@ public class BuildingController : MonoBehaviour {
 		if (selectedBuilding != null) selectedBuilding.SetSelected(false);
 		selectedBuilding = building;
 		selectedBuilding.SetSelected(true);
+		UpdateUI(building);
 	}
 
 	public void AttemptBuyBuilding (Building building)
@@ -29,5 +31,11 @@ public class BuildingController : MonoBehaviour {
 	{
 		resources.ChangeCash(-building.price);
 		building.SetOwned(true, "player");
+		UpdateUI(building);
+	}
+
+	void UpdateUI (Building building)
+	{
+		buildingUI.SetActive(building.isOwned);
 	}
 }
