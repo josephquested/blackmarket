@@ -2,14 +2,20 @@
 using System.Collections;
 
 public class Inputs : MonoBehaviour {
+	ActorMovement actorMovement;
 
-	// Use this for initialization
-	void Start () {
-	
+	void Start ()
+	{
+		actorMovement = GetComponent<ActorMovement>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-	
+
+	void FixedUpdate ()
+	{
+		MovementInput();
+	}
+
+	void MovementInput ()
+	{
+		actorMovement.ReceiveMovementInput(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 	}
 }
