@@ -12,10 +12,22 @@ public class Inputs : MonoBehaviour {
 	void FixedUpdate ()
 	{
 		MovementInput();
+		DirectionLockInput();
+		CrouchInput();
 	}
 
 	void MovementInput ()
 	{
-		actorMovement.ReceiveMovementInput(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+		actorMovement.ReceiveMovementInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+	}
+
+	void DirectionLockInput ()
+	{
+		actorMovement.ReceiveDirectionLock(Input.GetButton("DirectionLock"));
+	}
+
+	void CrouchInput ()
+	{
+		actorMovement.ReceiveCrouchInput(Input.GetButton("Crouch"));
 	}
 }
