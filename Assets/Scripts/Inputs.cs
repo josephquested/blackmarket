@@ -3,17 +3,19 @@ using System.Collections;
 
 public class Inputs : MonoBehaviour {
 	ActorMovement actorMovement;
+	ActorAttack actorAttack;
 
 	void Start ()
 	{
 		actorMovement = GetComponent<ActorMovement>();
+		actorAttack = GetComponent<ActorAttack>();
 	}
 
 	void FixedUpdate ()
 	{
 		MovementInput();
-		DirectionLockInput();
 		CrouchInput();
+		FireInput();
 	}
 
 	void MovementInput ()
@@ -21,9 +23,9 @@ public class Inputs : MonoBehaviour {
 		actorMovement.ReceiveMovementInput(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
 	}
 
-	void DirectionLockInput ()
+	void FireInput ()
 	{
-		actorMovement.ReceiveDirectionLock(Input.GetButton("DirectionLock"));
+		actorAttack.ReceiveFireInput(Input.GetAxisRaw("FireHorizontal"), Input.GetAxisRaw("FireVertical"));
 	}
 
 	void CrouchInput ()
