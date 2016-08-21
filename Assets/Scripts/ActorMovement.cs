@@ -2,15 +2,8 @@
 using System.Collections;
 
 public class ActorMovement : MonoBehaviour {
-	Rigidbody rb;
-	[SerializeField] public Utils utils;
 	public float speed;
 	public int direction;
-
-	void Start ()
-	{
-		rb = GetComponent<Rigidbody>();
-	}
 
 	public void ReceiveMovementInput (float horizontal, float vertical)
 	{

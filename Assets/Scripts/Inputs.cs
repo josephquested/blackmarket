@@ -15,6 +15,10 @@ public class Inputs : MonoBehaviour {
 	{
 		MovementInput();
 		CrouchInput();
+	}
+
+	void Update ()
+	{
 		FireInput();
 	}
 
@@ -25,7 +29,10 @@ public class Inputs : MonoBehaviour {
 
 	void FireInput ()
 	{
-		actorAttack.ReceiveFireInput(Input.GetAxisRaw("FireHorizontal"), Input.GetAxisRaw("FireVertical"));
+		if (Input.GetButtonDown("FireHorizontal") || Input.GetButtonDown("FireVertical"))
+		{
+			actorAttack.ReceiveFireInput(Input.GetAxisRaw("FireHorizontal"), Input.GetAxisRaw("FireVertical"));
+		}
 	}
 
 	void CrouchInput ()

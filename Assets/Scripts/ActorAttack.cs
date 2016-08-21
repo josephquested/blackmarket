@@ -2,22 +2,27 @@
 using System.Collections;
 
 public class ActorAttack : MonoBehaviour {
-	// Rigidbody rb;
+	Rigidbody rb;
 	public int direction;
+	public float recoil;
 	public Weapon weapon;
 
 	void Start ()
 	{
-		// rb = GetComponent<Rigidbody>();
+		rb = GetComponent<Rigidbody>();
 	}
 
 	public void ReceiveFireInput (float horizontal, float vertical)
 	{
-		direction = Utils.DirectionFromVector(horizontal, vertical, direction);
 		if (horizontal != 0 || vertical != 0)
 		{
-			Rotate(direction);
-			Fire();
+			int newDirection = Utils.DirectionFromVector(horizontal, vertical, direction);
+			if (newDirection == direction) Fire();
+			else
+			{
+				direction = newDirection;
+				Rotate(direction);
+			}
 		}
 	}
 
@@ -25,25 +30,14 @@ public class ActorAttack : MonoBehaviour {
 	{
 		if (weapon != null)
 		{
+			Recoil();
 			weapon.Fire();
 		}
 	}
 
-	int DirectionFromVector (float horizontal, float vertical)
+	void Recoil ()
 	{
-		if (vertical > 0) return  0;
-		if (vertical < 0) return 2;
-		if (horizontal > 0) return 1;
-		if (horizontal < 0) return 3;
-		else return direction;
-	}
-
-	Vector3 VectorFromDirection ()
-	{
-		if (direction == 0) return Vector3.forward;
-		if (direction == 1) return Vector3.right;
-		if (direction == 2) return Vector3.back;
-		else return -Vector3.right;
+		rb.AddForce(-transform.right * recoil);
 	}
 
 	void Rotate (int newDirection)
