@@ -32,7 +32,6 @@ public class Weapon : MonoBehaviour
 	{
 		if (audioSource.clip == fireAudioClip2) audioSource.clip = fireAudioClip1;
 		else audioSource.clip = fireAudioClip2;
-		print(Random.Range(0, 1));
 		audioSource.Play();
 	}
 }
