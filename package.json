@@ -1,0 +1,27 @@
+{
+  "name": "blackmarket",
+  "version": "1.0.0",
+  "description": "videogame",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "node tests/test.js | tap-spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephquested/blackmarket.git"
+  },
+  "author": "josephquested",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josephquested/blackmarket/issues"
+  },
+  "homepage": "https://github.com/josephquested/blackmarket#readme",
+  "dependencies": {
+    "inquirer": "^1.1.2"
+  },
+  "devDependencies": {
+    "tap-spec": "^4.1.1",
+    "tape": "^4.6.0"
+  }
+}
