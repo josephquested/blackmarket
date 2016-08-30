@@ -17,6 +17,7 @@ var initLogin = [
       console.log("logging in...")
     } else {
       console.clear()
+      process.exit()
     }
   })
 
