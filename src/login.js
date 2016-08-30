@@ -1,5 +1,4 @@
-var inquirer = require('inquirer')
-var clear = require('./clear')
+var event = require('./event')
 
 var actions = [
   {
@@ -11,13 +10,12 @@ var actions = [
 ]
 
 module.exports = function () {
-  clear()
-  inquirer.prompt(actions).then(function(res) {
+  event(actions, (res) => {
     if (res.hasAccount == "yes") {
-      existingUser()
-    } else {
-      newUser()
-    }
+       existingUser()
+     } else {
+       newUser()
+     }
   })
 
   function existingUser () {
