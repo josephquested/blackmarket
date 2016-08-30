@@ -1,6 +1,6 @@
 var event = require('./event')
 
-var actions = [
+var initActions = [
   {
     type: 'list',
     name: 'hasAccount',
@@ -9,8 +9,21 @@ var actions = [
   }
 ]
 
+var existingActions = [
+  {
+    type: 'input',
+    name: 'gangName',
+    message: 'gang name:'
+  },
+  {
+    type: 'password',
+    message: 'password',
+    name: 'password'
+  }
+]
+
 module.exports = function () {
-  event(actions, (res) => {
+  event(initActions, (res) => {
     if (res.hasAccount == "yes") {
        existingUser()
      } else {
@@ -19,7 +32,9 @@ module.exports = function () {
   })
 
   function existingUser () {
-    console.log("then log in")
+    event(existingActions, (res) => {
+      console.log(res)
+    })
   }
 
   function newUser () {
