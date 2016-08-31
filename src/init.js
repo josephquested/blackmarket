@@ -12,8 +12,10 @@ var actions = [
 module.exports = function () {
   event(actions, (res) => {
     if (res.login == "yes") {
+      console.log(cool)
       require('./login')()
     } else {
+      console.log(cool)
       require('./exit')()
     }
   })

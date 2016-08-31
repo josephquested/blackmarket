@@ -1,43 +1,25 @@
 var event = require('./event')
+var ajax = require('./ajax/ajax')
 
 var initActions = [
   {
-    type: 'list',
-    name: 'hasAccount',
-    message: 'do you have an account?',
-    choices: ['yes', 'no']
-  }
-]
-
-var existingActions = [
-  {
     type: 'input',
-    name: 'gangName',
-    message: 'gang name:'
-  },
-  {
-    type: 'password',
-    message: 'password',
-    name: 'password'
+    name: 'gang',
+    message: 'gang:'
   }
 ]
 
 module.exports = function () {
   event(initActions, (res) => {
-    if (res.hasAccount == "yes") {
-       existingUser()
-     } else {
-       newUser()
-     }
-  })
-
-  function existingUser () {
-    event(existingActions, (res) => {
-      console.log(res)
+    ajax.get('http://localhost:3000/gangs', (err, res) => {
+      if (err) console.log('error logging in!', err)
+      else console.log(res)
     })
-  }
-
-  function newUser () {
-    console.log("better get one")
-  }
+  })
 }
+
+// {
+//   type: 'password',
+//   message: 'password',
+//   name: 'password'
+// }

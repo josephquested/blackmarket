@@ -18,7 +18,8 @@
   },
   "homepage": "https://github.com/josephquested/blackmarket#readme",
   "dependencies": {
-    "inquirer": "^1.1.2"
+    "inquirer": "^1.1.2",
+    "superagent": "^2.2.0"
   },
   "devDependencies": {
     "tap-spec": "^4.1.1",
