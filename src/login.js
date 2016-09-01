@@ -13,8 +13,8 @@ var gangDoesntExistActions = [
   {
     type: 'list',
     name: 'choice',
-    message: 'what now?',
-    choices: ['start the gang', 'go back']
+    message: 'the *name* gang doesnt exist yet',
+    choices: ['start the *name* gang', 'go back']
   }
 ]
 
