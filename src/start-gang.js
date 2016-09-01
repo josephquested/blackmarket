@@ -18,14 +18,14 @@ var confirmPasswordActions = () => {
   }]
 }
 
-// var confirmStartGangActions = [
-//   {
-//     type: 'list',
-//     name: 'password',
-//     message: 'are you sure you want to start the *gang*?'
-//     choices: ['yes', 'no']
-//   }
-// ]
+var confirmStartGangActions = (gangName) => {
+  return {[
+    type: 'list',
+    name: 'confirm',
+    message: `are you sure you want to start the ${gangName} gang?`,
+    choices: ['yes', 'no']
+  }]
+}
 
 function initEvent (gangName) {
   event(initActions(gangName), (action) => {
@@ -38,23 +38,22 @@ function confirmPasswordEvent (gangName, password) {
   event(confirmPasswordActions(), (action) => {
     if (action.password == '') return confirmPasswordEvent(gangName, password)
     if (action.password == password) {
-      console.log('passwords match!')
+      confirmStartGangEvent(gangName, password)
     } else {
-      console.log('wrong')
+      initActions(gangName)
     }
   })
 }
 
-// function confirmStartGang (gangName, password) {
-//   event(confirmStartGangActions, (action) => {
-//     if (action.password == '') return confirmPasswordEvent(password)
-//     if (action.password == password) {
-//       console.log('passwords match!')
-//     } else {
-//       console.log('wrong')
-//     }
-//   })
-// }
+function confirmStartGangEvent (gangName, password) {
+  event(confirmStartGangActions(gangName), (action) => {
+    if (action.confirm == 'yes')
+      console.log('starting gang!')
+    } else {
+      return require('./init')()
+    }
+  })
+}
 
 module.exports = function (gangName) {
   initEvent(gangName)
