@@ -1,17 +1,17 @@
 var event = require('./event')
 
-var actions = [
+var initActions = [
   {
     type: 'list',
-    name: 'login',
+    name: 'choice',
     message: 'are you coming in?',
     choices: ['yes', 'no']
   }
 ]
 
 module.exports = function () {
-  event(actions, (res) => {
-    if (res.login == 'yes') {
+  event(initActions, (action) => {
+    if (action.choice == 'yes') {
       require('./login')()
     } else {
       require('./exit')()
