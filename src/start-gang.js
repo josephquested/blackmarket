@@ -1,16 +1,15 @@
 var event = require('./event')
 var ajax = require('./ajax/ajax')
 
-var initActions = (gangName) => {
- return [{
+function initActions (gangName) {
+  return [{
     type: 'password',
     name: 'password',
     message: `what is the password for ${gangName}?`
   }]
 }
 
-
-var confirmPasswordActions = () => {
+function confirmPasswordActions () {
   return [{
     type: 'password',
     name: 'password',
@@ -18,10 +17,10 @@ var confirmPasswordActions = () => {
   }]
 }
 
-var confirmStartGangActions = (gangName) => {
-  return {[
+function confirmStartGangActions (gangName) {
+  return [{
     type: 'list',
-    name: 'confirm',
+    name: 'choice',
     message: `are you sure you want to start the ${gangName} gang?`,
     choices: ['yes', 'no']
   }]
@@ -40,14 +39,14 @@ function confirmPasswordEvent (gangName, password) {
     if (action.password == password) {
       confirmStartGangEvent(gangName, password)
     } else {
-      initActions(gangName)
+      initEvent(gangName)
     }
   })
 }
 
 function confirmStartGangEvent (gangName, password) {
   event(confirmStartGangActions(gangName), (action) => {
-    if (action.confirm == 'yes')
+    if (action.choice == 'yes') {
       console.log('starting gang!')
     } else {
       return require('./init')()

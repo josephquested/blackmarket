@@ -13,7 +13,7 @@ var gangDoesntExistActions = (gangName) => {
   return [{
     type: 'list',
     name: 'choice',
-    message: `the ${gangName} gang doesnt exist yet`,
+    message: `the ${gangName} gang doesn't exist yet`,
     choices: [`start the ${gangName} gang`, 'go back']
   }]
 }
