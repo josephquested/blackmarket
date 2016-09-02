@@ -29,13 +29,9 @@ var passwordActions = () => {
 function initEvent () {
   event(initActions(), (action) => {
     if (action.name == '') return initEvent()
-    ajax.get(`http://localhost:3000/gangs/${action.name}`, (err, gang) => {
-      if (err) return () => { console.log('error logging in!', err) }
-      if (gang) {
-        passwordEvent(gang)
-      } else {
-        gangDoesntExistEvent(action.name)
-      }
+    ajax.get(`http://localhost:3000/gangs/${action.name}`, (res) => {
+      if (res) return passwordEvent(res)
+      return gangDoesntExistEvent(action.name)
     })
   })
 }
@@ -48,11 +44,8 @@ function passwordEvent (gang) {
 
 function gangDoesntExistEvent (gangName) {
   event(gangDoesntExistActions(gangName), (action) => {
-    if (action.choice == 'go back') {
-      return initEvent()
-    } else {
-      require('./start-gang')(gangName)
-    }
+    if (action.choice == 'go back') return initEvent()
+    return require('./start-gang')(gangName)
   })
 }
 

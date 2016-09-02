@@ -1,16 +1,11 @@
 var request = require('superagent')
 
-module.exports = function (geturl, callback) {
+module.exports = function (url, callback) {
 	request
-		.get(geturl)
+		.get(url)
 		.end((err, res) => {
-			if (res) callback(err, res.body)
-			else {
-				console.log('----------------------------------------------')
-				console.log('† FATAL ERROR CONNECTING TO THE BLACK MARKET †')
-				console.log('----------------------------------------------')
-				console.log(err)
-			}
-    }
-  )
+			if (err) return require('./error')()
+			callback(res.body)
+		}
+	)
 }
