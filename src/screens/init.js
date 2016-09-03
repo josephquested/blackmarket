@@ -1,4 +1,6 @@
 var event = require('../flow/event')
+var io = require('socket.io-client')
+var socket = io.connect('http://localhost:3000')
 
 var initActions = () => {
   return [{
