@@ -1,4 +1,4 @@
-var event = require('./event')
+var event = require('../flow/event')
 
 var initActions = () => {
   return [{
@@ -14,7 +14,7 @@ module.exports = function () {
     if (action.choice == 'yes') {
       require('./login')()
     } else {
-      require('./exit')()
+      require('../flow/exit')()
     }
   })
 }

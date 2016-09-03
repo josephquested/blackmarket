@@ -1,5 +1,5 @@
-var event = require('./event')
-var ajax = require('./ajax/ajax')
+var event = require('../flow/event')
+var ajax = require('../ajax/ajax')
 
 function initActions (gangName) {
   return [{
@@ -49,9 +49,11 @@ function confirmStartGangEvent (gangName, password) {
     var gangData = { name: gangName, password: password }
     if (action.choice == 'yes') {
       ajax.post('http://localhost:3000/gangs', gangData, (res) => {
+        // start socket
+        require('./menu')(gangName)
       })
     } else {
-      return require('./init')()
+      require('./login')()
     }
   })
 }

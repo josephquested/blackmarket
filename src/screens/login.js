@@ -1,5 +1,5 @@
-var event = require('./event')
-var ajax = require('./ajax/ajax')
+var event = require('../flow/event')
+var ajax = require('../ajax/ajax')
 
 var initActions = () => {
   return [{
@@ -15,6 +15,15 @@ var gangDoesntExistActions = (gangName) => {
     name: 'choice',
     message: `the ${gangName} gang doesn't exist yet`,
     choices: [`start the ${gangName} gang`, 'go back']
+  }]
+}
+
+var incorrectPasswordActions = () => {
+  return [{
+    type: 'list',
+    name: 'choice',
+    message: `† INCORRECT PASSWORD †`,
+    choices: [`try again`, 'go back']
   }]
 }
 
@@ -41,11 +50,19 @@ function passwordEvent (gang) {
     var loginData = {name: gang.name, password: action.password}
     ajax.post(`http://localhost:3000/login`, loginData, (res) => {
       if (res.valid) {
-        console.log("† WELCOME TO THE BLACK MARKET †")
+        // start socket
+        require('./menu')(gang.name)
       } else {
-        console.log("† INCORRECT PASSWORD †")
+        incorrectPasswordEvent(gang)
       }
     })
+  })
+}
+
+function incorrectPasswordEvent (gang) {
+  event(incorrectPasswordActions(), (action) => {
+    if (action.choice == 'go back') return initEvent()
+    return passwordEvent(gang)
   })
 }
 
