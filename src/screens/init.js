@@ -12,11 +12,12 @@ var initActions = () => {
 }
 
 module.exports = function () {
-  event(initActions(), (action) => {
-    if (action.choice == 'yes') {
-      require('./login')()
-    } else {
-      require('../flow/exit')()
-    }
-  })
+  console.log(require('../socket/socket'))
+  // event(initActions(), (action) => {
+  //   if (action.choice == 'yes') {
+  //     require('./login')()
+  //   } else {
+  //     require('../flow/exit')()
+  //   }
+  // })
 }
