@@ -38,7 +38,14 @@ function initEvent () {
 
 function passwordEvent (gang) {
   event(passwordActions(), (action) => {
-    console.log(action)
+    var loginData = {name: gang.name, password: action.password}
+    ajax.post(`http://localhost:3000/login`, loginData, (res) => {
+      if (res.valid) {
+        console.log("† WELCOME TO THE BLACK MARKET †")
+      } else {
+        console.log("† INCORRECT PASSWORD †")
+      }
+    })
   })
 }
 

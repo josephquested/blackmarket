@@ -48,9 +48,7 @@ function confirmStartGangEvent (gangName, password) {
   event(confirmStartGangActions(gangName), (action) => {
     var gangData = { name: gangName, password: password }
     if (action.choice == 'yes') {
-      ajax.post('http://localhost:3000/gangs', gangData, (err, res) => {
-        if (err) return console.log('† ERROR STARTING GANG †', err)
-        console.log('res: ', res)
+      ajax.post('http://localhost:3000/gangs', gangData, (res) => {
       })
     } else {
       return require('./init')()
