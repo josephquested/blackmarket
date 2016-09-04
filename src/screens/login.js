@@ -1,5 +1,4 @@
 var event = require('../flow/event')
-var ajax = require('../ajax/ajax')
 
 var initActions = () => {
   return [{
@@ -38,31 +37,32 @@ var passwordActions = () => {
 function initEvent () {
   event(initActions(), (action) => {
     if (action.name == '') return initEvent()
-    ajax.get(`http://localhost:3000/gangs/${action.name}`, (res) => {
-      if (res) return passwordEvent(res)
+    socket.doesGangExist('gangs', action.name)
+    socket.on('doesGangExistResponse', function (res) {
+      if (res) return passwordEvent(action.name)
       return gangDoesntExistEvent(action.name)
     })
   })
 }
 
-function passwordEvent (gang) {
+function passwordEvent (name) {
   event(passwordActions(), (action) => {
-    var loginData = {name: gang.name, password: action.password}
-    ajax.post(`http://localhost:3000/login`, loginData, (res) => {
-      if (res.valid) {
-        // start socket
-        require('./menu')(gang.name)
+    socket.isPasswordValid(name, action.password)
+    socket.on('isPasswordValidResponse', (res) => {
+      if (res) {
+        socket.setGangName(name)
+        return require('./menu')()
       } else {
-        incorrectPasswordEvent(gang)
+        return incorrectPasswordEvent(name)
       }
     })
   })
 }
 
-function incorrectPasswordEvent (gang) {
+function incorrectPasswordEvent (name) {
   event(incorrectPasswordActions(), (action) => {
     if (action.choice == 'go back') return initEvent()
-    return passwordEvent(gang)
+    return passwordEvent(name)
   })
 }
 

@@ -1,5 +1,4 @@
 var event = require('../flow/event')
-var ajax = require('../ajax/ajax')
 
 function initActions (gangName) {
   return [{
@@ -44,16 +43,24 @@ function confirmPasswordEvent (gangName, password) {
   })
 }
 
-function confirmStartGangEvent (gangName, password) {
-  event(confirmStartGangActions(gangName), (action) => {
-    var gangData = { name: gangName, password: password }
+function confirmStartGangEvent (name, password) {
+  event(confirmStartGangActions(name), (action) => {
     if (action.choice == 'yes') {
-      ajax.post('http://localhost:3000/gangs', gangData, (res) => {
-        // start socket
-        require('./menu')(gangName)
-      })
+      handleStartGang(name, password)
     } else {
       require('./login')()
+    }
+  })
+}
+
+function handleStartGang (name, password) {
+  socket.startGang(name, password)
+  socket.on('startGangResponse', (res) => {
+    if (res) {
+      socket.gangName = name
+      require('./menu')()
+    } else {
+      console.log('† ERROR STARTING GANG †')
     }
   })
 }

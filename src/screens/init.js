@@ -1,6 +1,4 @@
 var event = require('../flow/event')
-var io = require('socket.io-client')
-var socket = io.connect('http://localhost:3000')
 
 var initActions = () => {
   return [{
@@ -12,12 +10,10 @@ var initActions = () => {
 }
 
 module.exports = function () {
-  console.log(require('../socket/socket'))
-  // event(initActions(), (action) => {
-  //   if (action.choice == 'yes') {
-  //     require('./login')()
-  //   } else {
-  //     require('../flow/exit')()
-  //   }
-  // })
+  require('../socket/socket-init')(() => {
+    event(initActions(), (action) => {
+      if (action.choice == 'yes') return require('./login')()
+      return require('../flow/exit')()
+    })
+  })
 }

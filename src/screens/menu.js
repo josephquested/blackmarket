@@ -3,11 +3,8 @@ var extendedEvent = require('../flow/extended-event')
 var ajax = require('../ajax/ajax')
 var clear = require('../flow/clear')
 
-var gangName = ''
-
 var welcomeFlag = () => {
-  name = gangName.toUpperCase()
-	console.log(`† ${name} †`)
+	console.log(`† ${socket.gangName.toUpperCase()} †`)
   console.log('----------------')
 }
 
@@ -28,7 +25,6 @@ function initEvent (gang) {
   })
 }
 
-module.exports = function (name) {
-  gangName = name
+module.exports = function () {
   initEvent()
 }
