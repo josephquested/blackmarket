@@ -1,17 +1,9 @@
 var event = require('../flow/event')
-
-var initActions = () => {
-  return [{
-    type: 'list',
-    name: 'choice',
-    message: 'are you coming in?',
-    choices: ['yes', 'no']
-  }]
-}
+var actions = require('../actions/init')
 
 module.exports = function () {
   require('../socket/socket-init')(() => {
-    event(initActions(), (action) => {
+    event(actions.init(), (action) => {
       if (action.choice == 'yes') return require('./login')()
       return require('../flow/exit')()
     })
